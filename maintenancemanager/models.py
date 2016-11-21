@@ -22,8 +22,8 @@ class Client(models.Model):
     client_type_id = models.ForeignKey(ClientType)
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), client_guid, first_name, last_name, phone_number
-                         , email_address, str(client_type_id)])
+        return '|'.join([str(self.scn), self.client_guid, self.first_name, self.last_name, self.phone_number
+                         , self.email_address, str(self.client_type_id)])
 
 class Vehicle(models.Model):
     vehicle_guid = models.CharField(max_length=32, primary_key=True)
@@ -32,14 +32,14 @@ class Vehicle(models.Model):
     model = models.CharField(max_length=50)
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), vehicle_guid, year, make, model])
+        return '|'.join([str(self.scn), self.vehicle_guid, self.year, self.make, self.model])
 
 class Ownership(models.Model):
     client_guid = models.ForeignKey(Client)
     vehicle_guid = models.ForeignKey(Vehicle)
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), client_guid, vehicle_guid])
+        return '|'.join([str(self.scn), self.client_guid, self.vehicle_guid])
 
 class Service(models.Model):
     service_guid = models.CharField(max_length=32, primary_key=True)
@@ -49,8 +49,8 @@ class Service(models.Model):
     cost = models.DecimalField(max_digits=20, decimal_places=2)
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), service_guid, vehicle_guid, str(mileage_frequency)
-                         , str(duration_frequency), str(cost)])
+        return '|'.join([str(self.scn), self.service_guid, self.vehicle_guid, str(self.mileage_frequency)
+                         , str(self.duration_frequency), str(self.cost)])
 
 
 class ServiceTransaction(models.Model):
@@ -61,15 +61,15 @@ class ServiceTransaction(models.Model):
     date = models.DateField()
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), transaction_guid, client_guid, service_guid
-                         , str(mileage), date])
+        return '|'.join([str(self.scn), self.transaction_guid, self.client_guid, self.service_guid
+                         , str(self.mileage), self.date])
 
 class Shop(models.Model):
     client_guid = models.ForeignKey(Client)
     address = models.CharField(max_length=50)
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), client_guid, address])
+        return '|'.join([str(self.scn), self.client_guid, self.address])
 
 class ShopService(models.Model):
     client_guid = models.ForeignKey(Client)
@@ -78,5 +78,5 @@ class ShopService(models.Model):
     shop_service_time = models.DurationField()
     scn = models.ForeignKey(DataChangeLog)
     def __str__(self):
-        return '|'.join([str(scn), client_guid, service_guid, str(shop_service_cost)
-                         , str(shop_service_time)])
+        return '|'.join([str(self.scn), self.client_guid, self.service_guid, str(self.shop_service_cost)
+                         , str(self.shop_service_time)])
