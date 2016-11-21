@@ -1,0 +1,9 @@
+{% if client_data_list %}
+    <ul>
+    {% for client in client_data_list %}
+        <li><a href="/maintenancemanager/{{ client.id }}/client/">{{ client.last_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No clients are available.</p>
+{% endif %}
