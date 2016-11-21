@@ -1,1 +1,6 @@
-{{ last_name }}, {{ first_name }}
+<h1>{{ client_data.last_name }}, {{ client_data.first_name }}</h1>
+<ul>
+<li> {{ client_data.phone_number }} </li>
+<li> {{ client_data.email_address }} </li>
+<li> {{ client_data.client_type_id.client_type }} </li>
+</ul>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import Http404
 
 from .models import *
@@ -13,11 +13,6 @@ def index(request):
 
 def client_information(request, client_id):
     '''this method tries to get client data by id.  If none is found, raises an error'''
-    try:
-        client_data = Client.objects.get(pk=client_id)
-    except Client.DoesNotExist:
-        raise Http404("Client does not exist")
-    last_name = client_data.last_name
-    first_name = client_data.first_name
-    return render(request, 'maintenancemanager/client_information.html', {'last_name': last_name, 'first_name': first_name})
-
+    client_data = get_object_or_404(Client, pk=client_id)
+    return render(request, 'maintenancemanager/client_information.html'
+                  , {'client_data': client_data})
