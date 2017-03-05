@@ -11,10 +11,18 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import configparser
+from os.path import join
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONF_DIR = join(BASE_DIR, 'config')
 
+PG_CONFIG = configparser.ConfigParser()
+PG_CONFIG.read(join(CONF_DIR, 'postgres.conf'))
+
+DB_USERNAME = PG_CONFIG['CREDENTIALS']['username']
+DB_PASSWORD = PG_CONFIG['CREDENTIALS']['password']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -78,8 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': ('impala_dm'),
-        'USER': '',
-        'PASSWORD': '',
+        'USER': DB_USERNAME,
+        'PASSWORD': DB_PASSWORD,
         'HOST': 'localhost',
         'PORT': '',
     }
